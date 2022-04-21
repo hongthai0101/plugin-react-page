@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import Styles from "../constants/Styled";
 import Table from "../constants/Table";
 import { getListRequest, updateRequestById, countRequest } from "../apis";
-import { get } from "lodash";
 import { Input, FormGroup, Form, Label, Button, InputGroup } from "reactstrap";
 import {
   moneyItemAdapter,
@@ -101,13 +100,12 @@ const RequestList = () => {
           {
             Header: "Địa chỉ",
             accessor: (d) => d,
-            Cell: (d) => {
-              const data = get(d, "value", {});
+            Cell: ({ value }) => {
               return (
                 <div>
-                  {data.purchaseMethod === "TCH"
+                  {value.purchaseMethod === "TCH"
                     ? "129 Hoàng Văn Thụ, Phường 8, Phú Nhuận, TPHCM"
-                    : ` ${data.address}, ${data.ward}, ${data.district}, ${data.province}`}
+                    : ` ${value.address}, ${value.ward}, ${value.district}, ${value.province}`}
                 </div>
               );
             },
@@ -120,12 +118,11 @@ const RequestList = () => {
           {
             Header: "Sản phẩm",
             accessor: (d) => d.product,
-            Cell: (d) => {
-              const data = get(d, "value", {});
+            Cell: ({ value }) => {
               return (
                 <div>
-                  {data.brand} - {data.model}
-                  {data?.attributeOptions.map((item) => (
+                  {value.brand} - {value.model}
+                  {value?.attributeOptions.map((item) => (
                     <div>
                       <span className="fw-bold">{item.name}</span>: {item.value}
                     </div>
